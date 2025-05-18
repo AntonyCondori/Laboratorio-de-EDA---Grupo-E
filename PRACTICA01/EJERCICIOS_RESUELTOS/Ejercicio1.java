@@ -1,3 +1,4 @@
+package PRACTICA01.EJERCICIOS_RESUELTOS;
 import java.util.*;
 
 public class Ejercicio1 {
