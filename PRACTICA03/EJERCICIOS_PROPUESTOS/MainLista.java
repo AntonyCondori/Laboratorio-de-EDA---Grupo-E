@@ -1,6 +1,6 @@
 package PRACTICA03.EJERCICIOS_PROPUESTOS;
 
-public class MainLista {
+public class MainLista { //correcion de nombre en el commit
     public static void main(String[] args) {
         Lista<String> listaAlumnos = new Lista<>();
         listaAlumnos.agregar("MARIA");
