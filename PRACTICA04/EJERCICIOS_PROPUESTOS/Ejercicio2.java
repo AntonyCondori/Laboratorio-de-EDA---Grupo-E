@@ -1,15 +1,13 @@
 package PRACTICA04.EJERCICIOS_PROPUESTOS;
 
-public class Ejercicio2 {
-    Nodo cabeza = null;
-    Nodo cola = null;
+public class Ejercicio2<E> {
+    NodoCircular<E> cabeza = null;
+    NodoCircular<E> cola = null;
 
-    public void insertar(int valor) {
-        Nodo nuevoNodo = new Nodo(valor);
-
+    public void insertar(E valor) {
+        NodoCircular<E> nuevoNodo = new NodoCircular<>(valor);
         if (cabeza == null) {
-            cabeza = nuevoNodo;
-            cola = nuevoNodo;
+            cabeza = cola = nuevoNodo;
             nuevoNodo.siguiente = cabeza;
         } else {
             cola.siguiente = nuevoNodo;
@@ -24,7 +22,7 @@ public class Ejercicio2 {
             return;
         }
 
-        Nodo actual = cabeza;
+        NodoCircular<E> actual = cabeza;
         System.out.print("Lista circular: ");
         do {
             System.out.print(actual.valor + " ");
@@ -34,21 +32,19 @@ public class Ejercicio2 {
     }
 
     public static void main(String[] args) {
-        Ejercicio2 lista = new Ejercicio2();
-
+        Ejercicio2<Integer> lista = new Ejercicio2<>();
         for (int i = 1; i <= 12; i++) {
             lista.insertar(i);
         }
-
         lista.mostrarLista();
     }
 }
 
-class Nodo {
-    int valor;
-    Nodo siguiente;
+class NodoCircular<E> {
+    E valor;
+    NodoCircular<E> siguiente;
 
-    public Nodo(int valor) {
+    public NodoCircular(E valor) {
         this.valor = valor;
         this.siguiente = null;
     }
