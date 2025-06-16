@@ -169,4 +169,19 @@ public class BST<T extends Comparable<T>> implements BSTInterface<T> {
             r.add(n.getData());
         }
     }
+    /** Imprime el árbol girado 90° */
+    public void printTree() {
+        printNode(root, 0);
+    }
+
+    private void printNode(Node<T> node, int indent) {
+        if (node == null) return;
+        // primero el subárbol derecho
+        printNode(node.getRight(), indent + 4);
+        // luego este nodo, con indent espacios
+        for (int i = 0; i < indent; i++) System.out.print(" ");
+        System.out.println(node.getData());
+        // finalmente el subárbol izquierdo
+        printNode(node.getLeft(), indent + 4);
+    }
 }
