@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\TEC\\Downloads\\gs-core-2.0.jar",
+        "c:\\Users\\TEC\\Downloads\\gs-ui-swing-2.0.jar"
+    ]
+}

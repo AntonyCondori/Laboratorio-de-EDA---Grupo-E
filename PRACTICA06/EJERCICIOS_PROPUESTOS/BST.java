@@ -3,6 +3,10 @@ package PRACTICA06.EJERCICIOS_PROPUESTOS;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.view.Viewer;
+
 public class BST<T extends Comparable<T>> implements BSTInterface<T> {
     private Node<T> root;
 
@@ -183,5 +187,74 @@ public class BST<T extends Comparable<T>> implements BSTInterface<T> {
         System.out.println(node.getData());
         // finalmente el subárbol izquierdo
         printNode(node.getLeft(), indent + 4);
+    }
+
+   
+
+    public Node<T> getRoot() {
+        return root;
+    }
+
+    public void displayGraph(String graphId) {
+        System.setProperty("org.graphstream.ui", "swing");
+        Graph graph = new SingleGraph(graphId);
+        graph.setAttribute("ui.stylesheet",
+            "node { fill-color: #FFDD88; size: 30px; text-alignment: center; }" +
+            "edge { fill-color: #333333; }"
+        );
+
+        addToGraph(graph, root);
+
+        InOrderLayouter lay = new InOrderLayouter();
+        lay.layout(root);
+        lay.applyToGraph(graph);
+
+        Viewer viewer = graph.display();
+        viewer.disableAutoLayout();
+    }
+
+    private void addToGraph(Graph g, Node<T> n) {
+        if (n == null) return;
+        String id = n.getData().toString();
+        if (g.getNode(id) == null)
+            g.addNode(id).setAttribute("ui.label", id);
+        if (n.getLeft() != null) {
+            String lid = n.getLeft().getData().toString();
+            addToGraph(g, n.getLeft());
+            g.addEdge(id + "_L_" + lid, id, lid, true);
+        }
+        if (n.getRight() != null) {
+            String rid = n.getRight().getData().toString();
+            addToGraph(g, n.getRight());
+            g.addEdge(id + "_R_" + rid, id, rid, true);
+        }
+    }
+
+
+    private class InOrderLayouter {
+        private int counter = 0;
+        private java.util.Map<Node<T>, double[]> pos = new java.util.HashMap<>();
+
+        public void layout(Node<T> nodo) {
+            layoutRec(nodo, 0);
+        }
+
+        private void layoutRec(Node<T> nodo, int depth) {
+            if (nodo == null) return;
+            layoutRec(nodo.getLeft(), depth + 1);
+            double x = counter * 2.0;
+            double y = -depth * 2.0;
+            pos.put(nodo, new double[]{x, y});
+            counter++;
+            layoutRec(nodo.getRight(), depth + 1);
+        }
+
+        public void applyToGraph(Graph g) {
+            for (java.util.Map.Entry<Node<T>, double[]> e : pos.entrySet()) {
+                String id = e.getKey().getData().toString();
+                double[] xy = e.getValue();
+                g.getNode(id).setAttribute("xy", xy[0], xy[1]);
+            }
+        }
     }
 }
