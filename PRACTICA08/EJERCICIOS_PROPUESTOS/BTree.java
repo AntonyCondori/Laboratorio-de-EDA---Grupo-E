@@ -44,6 +44,4 @@ public class BTree<E extends Comparable<E>> {
         return isEmpty() ? "BTree vacío" : root.toString();
     }
 
-    // TODO: enlazar remove, predecessor, successor, destroy...
 }
-
